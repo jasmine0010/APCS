@@ -1,3 +1,1 @@
 # APCS
-
-Hello
