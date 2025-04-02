@@ -5,7 +5,7 @@ public interface Level {
     
     public void levelKeyPressed();
     
-    public boolean checkGameOver();
+    public boolean isGameOver();
     
     public void reset();
 }

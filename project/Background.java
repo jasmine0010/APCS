@@ -11,9 +11,12 @@ public class Background {
         
         layers = new PImage[] {
             p.loadImage("background.PNG"),
-            p.loadImage("buildingsBack.PNG"),
-            p.loadImage("buildingsMid.PNG"),
-            p.loadImage("buildingsFront.PNG")
+            p.loadImage("buildings-back.PNG"),
+            p.loadImage("buildings-mid.PNG"),
+            p.loadImage("buildings-front.PNG"),
+            p.loadImage("background-sparkles.PNG"),
+            p.loadImage("hangings-back.PNG"),
+            p.loadImage("hangings-front.PNG")
         };
             
         for (int i = 0; i < layers.length; i++) {
@@ -21,7 +24,7 @@ public class Background {
         }
         
         xPositions = new int[layers.length];
-        speeds = new int[] {3, 6, 8, 10};
+        speeds = new int[] {2, 4, 6, 8, 8, 9, 10};
     }
     
     public void display() {

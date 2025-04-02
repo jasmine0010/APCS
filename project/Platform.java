@@ -1,61 +1,79 @@
 import processing.core.*;
+import java.util.*;
 
 /**
- * A platform of multiple blocks.
- * Blocks have alternating base designs and randomly selected pattern designs.
- * Moves continuously to the left.
+ *  Represents a platform consisting of multiple blocks.
+ *  - Blocks alternate between two base designs
+ *  - Blocks have randomly selected pattern designs.
+ *  - Platform moves continuously to the left.
  */
 public class Platform {
-    private PApplet p;
-    private PVector pos;
-    private int numBlocks, borderWidth;
-    private PImage[] blockTypes;
-    private PImage[] blockPatterns;
-    private int[] finalPatterns;
+    private static final int MOVE_SPEED = 10;
+    private static final int BLOCK_WIDTH = 100;
     
-    public Platform(PApplet p, PVector pos, int numBlocks) {
+    private PApplet p;
+    private PVector position;
+    private int numBlocks, borderWidth;
+    private PImage jumpIndicator;
+    private PImage[] baseBlocks;
+    private PImage[] patternBlocks;
+    private int[] selectedPatterns;
+    private Set<Integer> jumpPositions;
+    
+    public Platform(PApplet p, PVector position, int numBlocks, int[] jumpPositions) {
         this.p = p;
-        this.pos = pos;
+        this.position = position;
         this.numBlocks = numBlocks;
-        borderWidth = 13;
+        this.borderWidth = 13;
+        this.jumpPositions = new HashSet<>();
+        for (int pos: jumpPositions) this.jumpPositions.add(pos - 1);
         
+        jumpIndicator = loadAndResize("jump-indicator.PNG", BLOCK_WIDTH, 0);
         // Load alternating block designs
-        blockTypes = new PImage[2];
-        blockTypes[0] = loadAndResize("block1.PNG", 75, 0);
-        blockTypes[1] = loadAndResize("block2.PNG", 75, 0);
+        baseBlocks = new PImage[] {
+            loadAndResize("block-base-1.PNG", BLOCK_WIDTH, 0),
+            loadAndResize("block-base-2.PNG", BLOCK_WIDTH, 0),
+        };
         
         // Load pattern designs
-        blockPatterns = new PImage[14];
-        for (int i = 0; i < blockPatterns.length; i++) {
-            blockPatterns[i] = loadAndResize("pattern" + (i + 1) + ".PNG", 75, 0);
+        patternBlocks = new PImage[13];
+        for (int i = 0; i < patternBlocks.length; i++) {
+            patternBlocks[i] = loadAndResize("pattern" + (i + 1) + ".PNG", BLOCK_WIDTH, 0);
         }
         
-        // Randomize patterns for the platform
-        finalPatterns = new int[numBlocks];        
+        // Randomize patterns for each block
+        selectedPatterns = new int[numBlocks];        
         for (int i = 0; i < numBlocks; i++) {
-            // 50% chance of pattern 13 (empty), otherwise randomly select
-            finalPatterns[i] = (p.random(1) < 0.5) ? 13: (int) p.random(blockPatterns.length);
+            // 50% chance of no pattern, otherwise randomly select
+            selectedPatterns[i] = (p.random(1) < 0.5) ? -1: (int) p.random(patternBlocks.length);
         }
     }
     
     public void display() {
         for (int i = 0; i < numBlocks; i++) {
-            // Calculate x position, remove outer right edge
-            float displayX = pos.x + i * (blockTypes[0].width - borderWidth);
+            float displayX = position.x + i * (baseBlocks[0].width - borderWidth);
             
-            // Alternate between the two block types
-            p.image(blockTypes[i % 2], displayX, pos.y);
-            
-            // Display preselected pattern
-            p.image(blockPatterns[finalPatterns[i]], displayX, pos.y);
+            // Alternate between the block types
+            if (jumpPositions.contains(i)) {
+                p.image(jumpIndicator, displayX, position.y);
+            } else {
+                p.image(baseBlocks[i % baseBlocks.length], displayX, position.y);
+                if (selectedPatterns[i] != -1) {
+                    p.image(patternBlocks[selectedPatterns[i]], displayX, position.y);
+                }
+            }
         }
         
         //p.rectMode(p.CORNER);
-        //p.rect(pos.x, pos.y, length, height);
+        //p.rect(position.x, position.y, length, height);
+    }
+    
+    public boolean onScreen() {
+        return position.x + numBlocks * (BLOCK_WIDTH - borderWidth) + borderWidth >= 0;
     }
     
     public void update() {
-        pos.x -= 10;
+        position.x -= MOVE_SPEED;
     }
     
     private PImage loadAndResize(String filename, int newWidth, int newHeight) {
@@ -65,9 +83,9 @@ public class Platform {
     }
     
     // Accessors
-    public PVector getPos() { return pos; }
+    public PVector getPosition() { return position; }
+    public int getSpeed() { return MOVE_SPEED; }
     public int getNumBlocks() { return numBlocks; }
-    public int getBlockWidth() { return blockTypes[0].width; }
-    public int getBlockHeight() { return blockTypes[0].height; }
-    public int getBorderWidth() { return borderWidth; }
+    public int getWidth() { return numBlocks * (BLOCK_WIDTH - borderWidth) + borderWidth; }
+    public int getHeight() { return baseBlocks[0].height; }
 }
