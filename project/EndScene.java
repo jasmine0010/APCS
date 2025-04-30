@@ -1,0 +1,30 @@
+import processing.core.*;
+
+public class EndScene {
+    private PApplet p;
+    private boolean levelPassed;
+    
+    public EndScene(PApplet p, boolean levelPassed) {
+        this.p = p;
+        this.levelPassed = levelPassed;
+    }
+    
+    public void display() {
+        if (levelPassed) {
+            p.background(0);
+            p.fill(255);
+            p.textSize(30);
+            p.text("YOU WON!", p.width / 2, p.height / 2);
+            p.text("Press SPACE to go to next level", p.width / 2, p.height / 2 + 30);
+            p.text("Press R to restart level", p.width / 2, p.height / 2 + 60);
+            p.text("Press E to return to menu", p.width / 2, p.height / 2 + 90);
+        } else {
+            p.background(0);
+            p.fill(255);
+            p.textSize(30);
+            p.text("GAME OVER", p.width / 2, p.height / 2);
+            p.text("Press R to restart level", p.width / 2, p.height / 2 + 30);
+            p.text("Press E to return to menu", p.width / 2, p.height / 2 + 60);
+        }
+    }
+}

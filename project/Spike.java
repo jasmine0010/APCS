@@ -1,9 +1,6 @@
 import processing.core.*;
 
-public class Spike {
-    private static final int MOVE_SPEED = 10;
-    private static final int SPIKE_WIDTH = 45;
-    
+public class Spike {    
     private PApplet p;
     private PVector position;
     private int numSpikes;
@@ -15,7 +12,7 @@ public class Spike {
         this.numSpikes = numSpikes;
         
         spike = p.loadImage("spike.PNG");
-        spike.resize(SPIKE_WIDTH, 0);
+        spike.resize(Constants.Size.SPIKE_WIDTH, 0);
     }
     
     public void display() {
@@ -25,7 +22,7 @@ public class Spike {
     }
     
     public void update() {
-        position.x -= MOVE_SPEED;
+        position.x -= Constants.Physics.MOVE_SPEED;
     }
     
     // Accessors

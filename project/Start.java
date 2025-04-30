@@ -2,17 +2,15 @@ import processing.core.*;
 
 public class Start {
     private PApplet p;
+    private PImage startScreen;
     
     public Start(PApplet p) {
         this.p = p;
+        startScreen = p.loadImage("start-screen.PNG");
+        startScreen.resize(0, p.height);
     }
     
     public void display() {
-        p.background(0);
-        p.fill(255);
-        p.textSize(30);
-        p.textAlign(p.CENTER);
-        p.text("GAME", p.width / 2, p.height / 2);
-        p.text("Menu (m)", p.width / 2, p.height / 2 + 30);
+        p.image(startScreen, 0, 0);
     }
 }

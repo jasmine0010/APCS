@@ -11,9 +11,6 @@ public class Text {
     private boolean border;
     private int[] colors; // TODO: change
     
-    private static final int MOVE_SPEED = 10;
-    private static final int GLITCH_INTENSITY = 3;
-    
     public Text(PApplet p, PVector position, String message, int size, boolean border) {
         this.p = p;
         this.position = position;
@@ -21,10 +18,8 @@ public class Text {
         this.inDuration = 40;
         this.frameStart = -1;
         this.size = size;
-        this.borderThickness = size / 20;
+        this.borderThickness = size / 15;
         this.border = border;
-        
-        p.textAlign(p.LEFT);
         
         colors = new int[] {
             p.color(203, 64, 122), 
@@ -35,9 +30,11 @@ public class Text {
         
         pixelifySans = p.createFont("Pixelify_Sans/PixelifySans-VariableFont_wght.ttf", 60);
         p.textFont(pixelifySans);
+        
+        p.textAlign(p.LEFT);
     }
     
-    public void display() {        
+    public void display() {
         int elapsedTime = p.frameCount - frameStart;
         
         if (position.x <= p.width && frameStart != -1) {
@@ -50,7 +47,7 @@ public class Text {
         if (position.x <= p.width + 10 && frameStart == -1) {
             frameStart = p.frameCount;
         }
-        position.x -= MOVE_SPEED;
+        position.x -= Constants.Physics.MOVE_SPEED;
     }
     
     public String getGlitchedText(int progress) {
@@ -101,7 +98,7 @@ public class Text {
     }
     
     private void drawTextBorder(String msg) {
-        p.fill(0);
+        p.fill(p.color(22, 4, 32));
         for (int dx = -borderThickness; dx <= borderThickness; dx++) {
             for (int dy = -borderThickness; dy <= borderThickness; dy++) {
                 if (dx != 0 || dy != 0) {  // Avoid drawing at (0,0) to prevent overlapping

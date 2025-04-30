@@ -5,10 +5,7 @@ import processing.core.*;
  * 
  * 
  */
-public class Player {
-    private static final float GRAVITY = 0.8f;
-    private static final float JUMP_FORCE = -16f;
-    
+public class Player {    
     private PApplet p;
     private PVector position, velocity, acceleration;
     private boolean isJumping;
@@ -18,11 +15,11 @@ public class Player {
         this.p = p;
         this.position = position;
         this.velocity = new PVector(0, 0);
-        this.acceleration = new PVector(0, GRAVITY);
+        this.acceleration = new PVector(0, Constants.Physics.GRAVITY);
         this.isJumping = true;
         
         player = p.loadImage("player.PNG");
-        player.resize(120, 0);
+        player.resize((int) Constants.scaleX(140), 0);
     }
     
     public void display() {
@@ -34,35 +31,6 @@ public class Player {
         position.add(velocity);
     }
     
-    public void checkPlatform(Platform platform) {
-        boolean isOnTop =
-            position.x + player.width > platform.getPosition().x &&
-            position.x < platform.getPosition().x + platform.getWidth() &&
-            position.y + player.height >= platform.getPosition().y &&
-            position.y < platform.getPosition().y + platform.getHeight();
-        
-        boolean isOnLeft =
-            position.y + player.height > platform.getPosition().y &&
-            position.y < platform.getPosition().y + platform.getHeight() &&
-            position.x + player.width > platform.getPosition().x &&
-            position.x < platform.getPosition().x + platform.getWidth();
-        
-        if (isOnTop) {
-            position.y = platform.getPosition().y - player.height;
-            acceleration.y = 0;
-            isJumping = false;
-        } else if (isOnLeft) {
-            position.x -= platform.getSpeed();
-        }
-    }
-    
-    public boolean checkSpike(Spike spike) {
-        return position.x + player.width >= spike.getPosition().x &&
-            position.x <= spike.getPosition().x + spike.getWidth() &&
-            position.y + player.width >= spike.getPosition().y &&
-            position.y <= spike.getPosition().y - spike.getHeight();
-    }
-    
     public boolean withinScreen() {
         return position.y <= p.height &&
             position.y + player.height >= 0 &&
@@ -72,10 +40,15 @@ public class Player {
     
     public void jump() {
         if (!isJumping) {
-            velocity.y = JUMP_FORCE;
-            acceleration.y = GRAVITY;
+            velocity.y = Constants.Physics.JUMP_FORCE;
+            acceleration.y = Constants.Physics.GRAVITY;
             isJumping = true;
         }
+    }
+    public void resetToPlatform(Platform platform) {
+        position.y = platform.getPosition().y - player.height + player.height / 14;
+        acceleration.y = 0;
+        isJumping = false;
     }
     
     public void playerKeyPressed() {
