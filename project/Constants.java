@@ -14,7 +14,7 @@ public class Constants {
     public static class Physics {
         public static final float GRAVITY = 0.8f;
         public static final float JUMP_FORCE = -16f;
-        public static final int MOVE_SPEED = 10;
+        public static final float SCROLL_SPEED = 10;
     }
     
     public static class Size {

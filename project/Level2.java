@@ -15,8 +15,8 @@ public class Level2 extends Level {
         end = new EndCheckpoint(p, new PVector(p.width / 5 + 9750, p.height * 2 / 3 + 130));
         
         platforms = new ArrayList<Platform>();
-        platforms.add(new Platform(p, new PVector(p.width / 5, p.height / 3), 10));
-        platforms.add(new Platform(p, new PVector(p.width / 5 + 1300, p.height / 3 + 60), 3));
+        platforms.add(new Platform(p, new PVector(p.width / 5, p.height / 3), 10, false));
+        platforms.add(new Platform(p, new PVector(p.width / 5 + 1300, p.height / 3 + 60), 3, false));
         
         spikes = List.of(
             new Spike(p, new PVector(p.width / 5 + 1300, p.height * 2 / 3), 2)

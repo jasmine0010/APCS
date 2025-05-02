@@ -3,11 +3,13 @@ import processing.core.*;
 public class Background {
     private PApplet p;
     private PImage[] layers;
-    private int[] xPositions;
-    private int[] speeds;
+    private float[] xPositions;
+    private float[] speeds;
+    private boolean newSpeedSet;
     
     public Background(PApplet p) {
         this.p = p;
+        newSpeedSet = false;
         
         layers = new PImage[] {
             p.loadImage("background.PNG"),
@@ -22,8 +24,13 @@ public class Background {
             layers[i].resize(0, p.height);
         }
         
-        xPositions = new int[layers.length];
-        speeds = new int[] {2, 4, 6, 8, 9, 10};
+        xPositions = new float[layers.length];
+        speeds = new float[] {
+            Project.scrollSpeed * 0.2f,
+            Project.scrollSpeed * 0.4f,
+            Project.scrollSpeed * 0.6f, Project.scrollSpeed * 0.8f,
+            Project.scrollSpeed * 0.9f, Project.scrollSpeed
+        };
     }
     
     public void display() {
@@ -40,5 +47,29 @@ public class Background {
                 xPositions[i] = 0;
             }
         }
+    }
+    
+    public void backgroundKeyPressed() {
+        /*if (p.keyCode == p.SHIFT && !newSpeedSet) {
+            speeds = new float[] {
+                Project.scrollSpeed * 0.2f,
+                Project.scrollSpeed * 0.4f,
+                Project.scrollSpeed * 0.6f, Project.scrollSpeed * 0.8f,
+                Project.scrollSpeed * 0.9f, Project.scrollSpeed
+            };
+            newSpeedSet = true;
+        }*/
+    }
+    
+    public void backgroundKeyReleased() {
+        /*if (newSpeedSet) {
+            speeds = new float[] {
+                Project.scrollSpeed * 0.2f,
+                Project.scrollSpeed * 0.4f,
+                Project.scrollSpeed * 0.6f, Project.scrollSpeed * 0.8f,
+                Project.scrollSpeed * 0.9f, Project.scrollSpeed
+            };
+        }
+        newSpeedSet = false;*/
     }
 }

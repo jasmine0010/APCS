@@ -12,6 +12,8 @@ public class Platform {
     private PVector position;
     private int numBlocks;
     private int borderWidth;
+    private boolean moves;
+    private int frameCount;
     private PImage jumpIndicator;
     private PImage fallIndicator;
     private PImage[] baseBlocks;
@@ -25,6 +27,7 @@ public class Platform {
         this.position = position;
         this.numBlocks = numBlocks;
         this.borderWidth = (int) (Constants.Size.BLOCK_WIDTH / 16.76923);
+        this.moves = false;
         
         this.jumpPositions = new ArrayList<Integer>();
         for (int pos: jumpPositions) this.jumpPositions.add(pos - 1);
@@ -55,11 +58,13 @@ public class Platform {
         }
     }
     
-    public Platform(PApplet p, PVector position, int numBlocks) {
+    public Platform(PApplet p, PVector position, int numBlocks, boolean moves) {
         this.p = p;
         this.position = position;
         this.numBlocks = numBlocks;
         this.borderWidth = (int) (Constants.Size.BLOCK_WIDTH / 16.76923);
+        this.moves = moves;
+        this.frameCount = 0;
         
         // Load alternating block designs
         baseBlocks = new PImage[] {
@@ -111,7 +116,17 @@ public class Platform {
     }
     
     public void update() {
-        position.x -= Constants.Physics.MOVE_SPEED;
+        position.x -= Project.scrollSpeed;
+        
+        if (moves && frameCount >= 100) {
+            frameCount = 0;
+        } else if (moves && frameCount < 50) {
+            position.y += 3;
+            frameCount++;
+        } else if (moves && frameCount >= 50) {
+            position.y -= 3;
+            frameCount++;
+        }
     }
     
     private PImage loadAndResize(String filename, int newWidth, int newHeight) {

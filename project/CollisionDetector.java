@@ -7,11 +7,26 @@ public class CollisionDetector {
         this.p = p;
     }
     
-    public boolean checkPlatform(Player player, Platform platform) {
+    public boolean checkPlatformTop(Player player, Platform platform) {
         return player.getPosition().x + player.getWidth() > platform.getPosition().x &&
             player.getPosition().x < platform.getPosition().x + platform.getWidth() &&
             player.getPosition().y + player.getHeight() - player.getHeight() / 14 >= platform.getPosition().y &&
-            player.getPosition().y < platform.getPosition().y + platform.getHeight();
+            player.getPosition().y + player.getHeight() - player.getHeight() / 14 <= platform.getPosition().y + 30
+            /*player.getPosition().y < platform.getPosition().y + platform.getHeight()*/;
+    }
+    
+    public boolean checkPlatformBottom(Player player, Platform platform) {
+        return player.getPosition().x + player.getWidth() > platform.getPosition().x &&
+            player.getPosition().x < platform.getPosition().x + platform.getWidth() &&
+            player.getPosition().y > platform.getPosition().y - 30 &&
+            player.getPosition().y < platform.getPosition().y;
+    }
+    
+    public boolean checkPlatformLeft(Player player, Platform platform) {
+        return player.getPosition().x + player.getWidth() > platform.getPosition().x &&
+            player.getPosition().x + player.getWidth() < platform.getPosition().x + 30 &&
+            player.getPosition().y + player.getHeight() - player.getHeight() / 14 > platform.getPosition().y + 30 &&
+            player.getPosition().y <= platform.getPosition().y + 30;
     }
     
     public boolean checkSpike(Player player, Spike spike) {

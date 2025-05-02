@@ -10,6 +10,7 @@ public class Player {
     private PVector position, velocity, acceleration;
     private boolean isJumping;
     private PImage player;    
+    private boolean shiftHeld;
     
     public Player(PApplet p, PVector position) {
         this.p = p;
@@ -19,7 +20,7 @@ public class Player {
         this.isJumping = true;
         
         player = p.loadImage("player.PNG");
-        player.resize((int) Constants.scaleX(140), 0);
+        player.resize((int) Constants.scaleX(160), 0);
     }
     
     public void display() {
@@ -45,17 +46,44 @@ public class Player {
             isJumping = true;
         }
     }
+    
     public void resetToPlatform(Platform platform) {
         position.y = platform.getPosition().y - player.height + player.height / 14;
+        //velocity.x = 0;
         acceleration.y = 0;
         isJumping = false;
+    }
+    
+    public void moveWithPlatform() {
+        velocity.x = -Project.scrollSpeed;
+    }
+    
+    public void limitToPlatformBottom(Platform platform) {
+        //velocity.x = 0;
+        if (velocity.y < 0) {
+            velocity.y = 0;
+        }
     }
     
     public void playerKeyPressed() {
         if (p.key == ' ') {
             jump();
         }
+        /*if (p.keyCode == p.SHIFT && !shiftHeld) {
+            shiftHeld = true;
+            Project.updateScrollSpeed(Project.scrollSpeed / 2);
+        }*/
     }
+    
+    public void playerKeyReleased() {
+        /*if (p.keyCode == p.SHIFT) {
+            shiftHeld = false;
+            Project.updateScrollSpeed(Project.scrollSpeed * 2);
+        }*/
+    }
+    
+    // Setters
+    public void setVelocity(PVector vel) { velocity = vel; }
     
     // Accessors
     public PVector getPosition() { return position; }

@@ -34,9 +34,15 @@ public abstract class Level {
         for (int i = 0; i < platforms.size(); i++) {
             platforms.get(i).update();
             if (player.getVelocity().y >= 0) {
-                if (collisionDetector.checkPlatform(player, platforms.get(i))) {
+                if (collisionDetector.checkPlatformLeft(player, platforms.get(i))) {
+                    player.setVelocity(new PVector(-Project.scrollSpeed, player.getVelocity().y));
+                }
+                if (collisionDetector.checkPlatformTop(player, platforms.get(i))) {
                     player.resetToPlatform(platforms.get(i));
                 }
+                /*if (collisionDetector.checkPlatformBottom(player, platforms.get(i))) {
+                    player.limitToPlatformBottom(platforms.get(i));
+                }*/
             }
             if (!platforms.get(i).onScreen()) {
                 platforms.remove(i);
@@ -64,6 +70,12 @@ public abstract class Level {
     
     public void levelKeyPressed() {
         player.playerKeyPressed();
+        background.backgroundKeyPressed();
+    }
+    
+    public void levelKeyReleased() {
+        player.playerKeyReleased();
+        background.backgroundKeyReleased();
     }
     
     public void reset() {

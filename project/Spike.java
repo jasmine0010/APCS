@@ -22,7 +22,7 @@ public class Spike {
     }
     
     public void update() {
-        position.x -= Constants.Physics.MOVE_SPEED;
+        position.x -= Project.scrollSpeed;
     }
     
     // Accessors

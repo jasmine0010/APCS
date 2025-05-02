@@ -31,7 +31,7 @@ public class Text {
         pixelifySans = p.createFont("Pixelify_Sans/PixelifySans-VariableFont_wght.ttf", 60);
         p.textFont(pixelifySans);
         
-        p.textAlign(p.LEFT);
+        p.textAlign(p.LEFT, p.BASELINE);
     }
     
     public void display() {
@@ -47,7 +47,7 @@ public class Text {
         if (position.x <= p.width + 10 && frameStart == -1) {
             frameStart = p.frameCount;
         }
-        position.x -= Constants.Physics.MOVE_SPEED;
+        position.x -= Project.scrollSpeed;
     }
     
     public String getGlitchedText(int progress) {

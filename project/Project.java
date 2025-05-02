@@ -1,4 +1,5 @@
 import processing.core.*;
+import processing.sound.*;
 import java.util.*;
 
 public class Project extends PApplet {
@@ -7,9 +8,12 @@ public class Project extends PApplet {
     private Start start;
     private Menu menu;
     private EndScene endScene;
+    private SoundFile music;
     
     enum GameState { START, MENU, LEVEL, PAUSED, GAMEOVER, LEVEL_PASSED }
     private GameState gameState;
+    
+    public static float scrollSpeed = Constants.Physics.SCROLL_SPEED;
     
     public void settings() {
         fullScreen();
@@ -26,6 +30,8 @@ public class Project extends PApplet {
         
         start = new Start(this);
         menu = new Menu(this);
+        
+        music = new SoundFile(this, "music.mp3");
     }
     
     public void draw() {
@@ -69,17 +75,21 @@ public class Project extends PApplet {
                 if (key == '1') {
                     currentLevel = 0;
                     gameState = GameState.LEVEL;
+                    levels.get(currentLevel).reset();
+                    music.loop();
                 }
-                if (key == '2') {
+                /*if (key == '2') {
                     currentLevel = 1;
                     gameState = GameState.LEVEL;
-                }
+                    music.loop();
+                }*/
                 break;
             case LEVEL:
                 levels.get(currentLevel).levelKeyPressed();
                 if (key == 'r' || key == 'R') {
                     levels.get(currentLevel).reset();
                     gameState = GameState.LEVEL;
+                    music.loop();
                 }
                 if (key == 'p' || key == 'P') {
                     gameState = GameState.PAUSED;
@@ -94,25 +104,42 @@ public class Project extends PApplet {
                 if (key == 'r' || key == 'R') {
                     levels.get(currentLevel).reset();
                     gameState = GameState.LEVEL;
+                    music.loop();
                 }
                 if (key == 'e' || key == 'E') {
                     gameState = GameState.MENU;
+                    music.stop();
                 }
                 break;
             case LEVEL_PASSED:
                 if (key == 'r' || key == 'R') {
                     levels.get(currentLevel).reset();
                     gameState = GameState.LEVEL;
+                    music.loop();
                 }
                 if (key == 'e' || key == 'E') {
                     gameState = GameState.MENU;
+                    music.stop();
                 }
                 if (key == ' ') {
                     currentLevel++;
                     gameState = GameState.LEVEL;
+                    music.loop();
                 }
                 break;
         }
+    }
+    
+    public void keyReleased() {
+        switch(gameState) {
+            case LEVEL:
+            levels.get(currentLevel).levelKeyReleased();
+            break;
+        }
+    }
+    
+    public static void updateScrollSpeed(float speed) {
+        scrollSpeed = speed;
     }
     
     public static void main(String[] args) {
