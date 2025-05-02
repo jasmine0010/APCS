@@ -17,7 +17,7 @@ public class Menu {
     
     public void display() {
         p.image(menuScreen, 0, 0);
-        p.text("PRESS '1' TO CONTINUE", p.width/2, 100);
+        p.text("PRESS ANY KEY TO CONTINUE", p.width/2, 100);
         p.text("IT WILL TAKE A WHILE TO LOAD...", p.width/2, 250);
         // change
         int counter = 1;

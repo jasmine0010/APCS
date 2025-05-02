@@ -72,13 +72,12 @@ public class Project extends PApplet {
                 gameState = GameState.MENU;
                 break;
             case MENU:
-                if (key == '1') {
+                /*if (key == '1') {*/
                     currentLevel = 0;
                     gameState = GameState.LEVEL;
                     levels.get(currentLevel).reset();
                     music.loop();
-                }
-                /*if (key == '2') {
+                /*}if (key == '2') {
                     currentLevel = 1;
                     gameState = GameState.LEVEL;
                     music.loop();
@@ -86,7 +85,7 @@ public class Project extends PApplet {
                 break;
             case LEVEL:
                 levels.get(currentLevel).levelKeyPressed();
-                if (key == 'r' || key == 'R') {
+                if (keyCode == ENTER) {
                     levels.get(currentLevel).reset();
                     gameState = GameState.LEVEL;
                     music.loop();
@@ -101,23 +100,23 @@ public class Project extends PApplet {
                 }
                 break;
             case GAMEOVER:
-                if (key == 'r' || key == 'R') {
+                if (keyCode == ENTER) {
                     levels.get(currentLevel).reset();
                     gameState = GameState.LEVEL;
                     music.loop();
                 }
-                if (key == 'e' || key == 'E') {
+                if (key == '.') {
                     gameState = GameState.MENU;
                     music.stop();
                 }
                 break;
             case LEVEL_PASSED:
-                if (key == 'r' || key == 'R') {
+                if (keyCode == ENTER) {
                     levels.get(currentLevel).reset();
                     gameState = GameState.LEVEL;
                     music.loop();
                 }
-                if (key == 'e' || key == 'E') {
+                if (key == '.') {
                     gameState = GameState.MENU;
                     music.stop();
                 }

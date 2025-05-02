@@ -16,16 +16,16 @@ public class EndScene {
             p.textSize(30);
             p.text("YOU WON!", p.width / 2, p.height / 2);
             //p.text("Press SPACE to go to next level", p.width / 2, p.height / 2 + 30);
-            p.text("Press R to restart level", p.width / 2, p.height / 2 + 60);
-            p.text("Press E to return to menu", p.width / 2, p.height / 2 + 90);
+            p.text("Press ENTER to restart level", p.width / 2, p.height / 2 + 60);
+            p.text("Press PERIOD to return to menu", p.width / 2, p.height / 2 + 90);
         } else {
             p.background(0);
             p.fill(255);
             p.textAlign(p.CENTER, p.CENTER);
             p.textSize(50);
             p.text("GAME OVER", p.width / 2, p.height / 2);
-            p.text("Press R to restart level", p.width / 2, p.height / 2 + 70);
-            p.text("Press E to return to menu", p.width / 2, p.height / 2 + 140);
+            p.text("Press ENTER to restart level", p.width / 2, p.height / 2 + 70);
+            p.text("Press PERIOD to return to menu", p.width / 2, p.height / 2 + 140);
             p.text("It might take a while to load...", p.width / 2, p.height / 2 + 210);
         }
     }
