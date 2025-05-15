@@ -106,7 +106,7 @@ public class Project extends PApplet {
                     music.loop();
                 }
                 if (key == '.') {
-                    gameState = GameState.MENU;
+                    gameState = GameState.START;
                     music.stop();
                 }
                 break;
@@ -117,7 +117,7 @@ public class Project extends PApplet {
                     music.loop();
                 }
                 if (key == '.') {
-                    gameState = GameState.MENU;
+                    gameState = GameState.START;
                     music.stop();
                 }
                 if (key == ' ') {

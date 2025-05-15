@@ -6,4 +6,7 @@ public class Teacher {
         this.name = name;
         this.subject = subject;
     }
+    
+    public String getName() { return name; }
+    public String getSubject() { return subject; }
 }
